@@ -31,6 +31,19 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="js/confetti.browser.min.js"></script>
   <script>
+  // CAPTURA UTM (se tiver na URL)
+  const params = new URLSearchParams(window.location.search);
+  const utms = {};
+  for (const [key, value] of params.entries()) {
+    if (key.startsWith('utm')) {
+      utms[key] = value;
+    }
+  }
+  if (Object.keys(utms).length > 0) {
+    localStorage.setItem('utm_lead', JSON.stringify(utms));
+  }
+
+  // REAPLICA UTM (se não tiver na URL, reaplica da memória)
   const storedUTMs = JSON.parse(localStorage.getItem('utm_lead') || '{}');
   const url = new URL(window.location.href);
   let modified = false;
@@ -46,6 +59,7 @@
     history.replaceState(null, '', url.toString());
   }
 </script>
+
 </head>
 <body>
   <div id="loading-screen" style="display: none;">
