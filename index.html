@@ -30,6 +30,23 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/confetti.browser.min.js"></script>
+  <script>
+  const storedUTMs = JSON.parse(localStorage.getItem('utm_lead') || '{}');
+  const url = new URL(window.location.href);
+  let modified = false;
+
+  for (const key in storedUTMs) {
+    if (!url.searchParams.has(key)) {
+      url.searchParams.set(key, storedUTMs[key]);
+      modified = true;
+    }
+  }
+
+  if (modified) {
+    history.replaceState(null, '', url.toString());
+  }
+</script>
+
 </head>
 <body>
   <div id="loading-screen" style="display: none;">
