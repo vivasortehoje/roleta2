@@ -322,9 +322,11 @@
 
 
     const getQueryParams = () => {
-      const params = new URLSearchParams(window.location.search);
-      return params.toString();
-    };
+  const utms = JSON.parse(localStorage.getItem('utm_lead') || '{}');
+  const query = new URLSearchParams(utms);
+  return query.toString();
+};
+
 
     document.getElementById('resgatar-premio').addEventListener('click', () => {
       const queryParams = getQueryParams();
